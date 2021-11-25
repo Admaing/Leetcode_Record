@@ -65,3 +65,69 @@ class Solution:
 
 > 双指针方法待补充（使用空间O(1)）
 
+
+
+# 143.重排链表
+
+> 给定一个单链表 L 的头节点 head ，单链表 L 表示为：
+>
+> L0 → L1 → … → Ln - 1 → Ln
+>
+> 请将其重新排列后变为：
+>
+> L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+>
+> 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+>
+>  
+>
+> 示例 1：
+>
+> 输入：head = [1,2,3,4]
+> 输出：[1,4,2,3]
+
+思路：
+
+由于链表不能按照下标访问，因此将其转换成下标可以访问的线性表
+
+- 将链表存入线性表
+- 然后根据线性表，首尾连接重建表
+
+> go
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reorderList(head *ListNode)  {
+
+    // 特判
+    if head==nil{
+        return
+    }
+    nodes := []*ListNode{}
+
+    for node:=head;node!=nil; node=node.Next{
+        // 将节点放入线性表,第二个循环直接重建
+        nodes = append(nodes,node)
+    }
+    i,j:=0,len(nodes)-1
+    for i<j{
+        nodes[i].Next = nodes[j]
+        i++
+
+        if i==j{
+            break
+        }
+        nodes[j].Next = nodes[i]
+        j--
+    }
+    // 将最后一个节点指向nil
+    nodes[i].Next = nil    
+}
+```
+
