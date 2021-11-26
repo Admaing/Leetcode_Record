@@ -12,6 +12,12 @@
 输出：返回索引为 1 的链表节点
 解释：链表中有一个环，其尾部连接到第二个节点。
 
+### medium
+
+
+
+
+
 
 
 思路：
@@ -79,12 +85,16 @@ class Solution:
 >
 > 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
 >
->  
+> 
 >
 > 示例 1：
 >
 > 输入：head = [1,2,3,4]
 > 输出：[1,4,2,3]
+
+
+
+### medium
 
 思路：
 
@@ -128,6 +138,64 @@ func reorderList(head *ListNode)  {
     }
     // 将最后一个节点指向nil
     nodes[i].Next = nil    
+}
+```
+
+## 2 两数之和
+
+>给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+>
+>请你将两个数相加，并以相同形式返回一个表示和的链表。
+>
+>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+>
+>![img](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2021/01/02/addtwonumber1.jpg)
+>
+>```
+>输入：l1 = [2,4,3], l2 = [5,6,4]
+>输出：[7,0,8]
+>解释：342 + 465 = 807.
+>```
+
+
+
+思路：
+
+直接遍历两个链表，按照遍历的先后顺序第一位乘以十的零次幂，第二位十的一次幂，依次类推
+
+求和之后，按照对顺序依次递减
+
+CV官方题解
+
+```go
+
+func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {
+    var tail *ListNode
+    carry := 0
+    for l1 != nil || l2 != nil {
+        n1, n2 := 0, 0
+        if l1 != nil {
+            n1 = l1.Val
+            l1 = l1.Next
+        }
+        if l2 != nil {
+            n2 = l2.Val
+            l2 = l2.Next
+        }
+        sum := n1 + n2 + carry
+        sum, carry = sum%10, sum/10
+        if head == nil {
+            head = &ListNode{Val: sum}
+            tail = head
+        } else {
+            tail.Next = &ListNode{Val: sum}
+            tail = tail.Next
+        }
+    }
+    if carry > 0 {
+        tail.Next = &ListNode{Val: carry}
+    }
+    return
 }
 ```
 
