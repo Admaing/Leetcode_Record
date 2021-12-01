@@ -667,5 +667,43 @@ class Solution:
 
 
 
+# 剑指offer II 004只出现一次的数字
+
+> 给你一个整数数组 nums ，除某个元素仅出现 一次 外，其余每个元素都恰出现 三次 。请你找出并返回那个只出现了一次的元素。
+>
+>  
+>
+> 示例 1：
+>
+> 输入：nums = [2,2,3,2]
+> 输出：3
 
 
+
+思路：哈希表，哈希表存储数据，返回为零的key
+
+
+
+哈希解法
+
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        # 第一眼思路哈希
+        hashmap = {}
+        for i in nums:
+            if i in hashmap:
+                hashmap[i] = hashmap[i]+1
+            else:
+                hashmap[i] = 0
+
+        for i in nums:
+            if hashmap[i] == 0:
+                return i
+```
+
+
+
+进阶，时间复杂度为o(n)并且不使用额外空间，应该想到位运算，想不到
+
+异或运算，二进制相同异或为零，不同异或
