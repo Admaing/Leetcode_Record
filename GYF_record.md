@@ -652,7 +652,7 @@ class Solution:
 代码
 
 ```python
-class Solution:
+ class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         i = len(numbers)-1
         j = 0
@@ -707,3 +707,62 @@ class Solution:
 进阶，时间复杂度为o(n)并且不使用额外空间，应该想到位运算，想不到
 
 异或运算，二进制相同异或为零，不同异或
+
+剑指offer II 005单词长度的最大乘积
+
+
+
+# 剑指offer II 007 数组中和为0的三个数
+
+>  内容基本同三数之和
+>
+> 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a ，b ，c ，使得 a + b + c = 0 ？请找出所有和为 0 且 不重复 的三元组。
+>
+>  
+>
+> 示例 1：
+>
+> 输入：nums = [-1,0,1,2,-1,-4]
+> 输出：[[-1,-1,2],[-1,0,1]]
+
+
+
+思路：固定头指针，然后中间双指针逼近，跳过相同元素
+
+
+
+```python
+from typing import List
+
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) < 3:
+            return []
+
+        nums.sort()
+
+        res = []
+        for i in range(0, len(nums) - 2):
+            if i > 0 and nums[i] == nums[i - 1]: continue
+            target = -nums[i]
+            left, right = i + 1, len(nums) - 1
+            while left < right:
+                s = nums[left] + nums[right]
+                if s == target:
+                    res.append([nums[i], nums[left], nums[right]])
+                    # 去重
+                    while left < right:
+                        left = left + 1
+                        if nums[left - 1] != nums[left]: break
+                    while left < right:
+                        right = right - 1
+                        if nums[right + 1] != nums[right]: break
+                elif s < target:
+                    left = left + 1
+                else:
+                    right = right - 1
+        return res
+
+```
+
