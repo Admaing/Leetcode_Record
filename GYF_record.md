@@ -766,3 +766,61 @@ class Solution:
 
 ```
 
+
+
+# 457 环形数组是否存在循环
+
+> 存在一个不含 0 的 环形 数组 nums ，每个 nums[i] 都表示位于下标 i 的角色应该向前或向后移动的下标个数：
+>
+> 如果 nums[i] 是正数，向前（下标递增方向）移动 |nums[i]| 步
+> 如果 nums[i] 是负数，向后（下标递减方向）移动 |nums[i]| 步
+> 因为数组是 环形 的，所以可以假设从最后一个元素向前移动一步会到达第一个元素，而第一个元素向后移动一步会到达最后一个元素。
+>
+> 数组中的 循环 由长度为 k 的下标序列 seq 标识：
+>
+> 遵循上述移动规则将导致一组重复下标序列 seq[0] -> seq[1] -> ... -> seq[k - 1] -> seq[0] -> ...
+> 所有 nums[seq[j]] 应当不是 全正 就是 全负
+> k > 1
+> 如果 nums 中存在循环，返回 true ；否则，返回 false 。
+>
+> 示例 1：
+>
+> 输入：nums = [2,-1,1,2,2]
+> 输出：true
+> 解释：存在循环，按下标 0 -> 2 -> 3 -> 0 。循环长度为 3 。
+
+python 代码
+
+```python
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+        n = len(nums)
+        # 数组长度
+        def next(cur):
+            # 返回指针下一步要到的下标的位置
+            return (cur+nums[cur])%n
+
+   
+        for i,num in enumerate(nums):
+            if num==0:
+                continue 
+            # 定义快慢指针，快指针每次走两步，起步快指针在慢指针的下一步
+            slow,fast = i, next(i)
+            
+            #要判断方向是否相同，因为条件是环的元素不是全正就是全负，因此应该相乘大于零
+            while nums[slow]*nums[next(slow)]>0 and nums[fast]*nums[next(fast)]>0:
+                if slow == fast: 
+                    if slow ==next(slow):
+                        break
+                    return True
+                slow = next(slow)
+                fast = next(next(fast))
+            add = i
+            while nums[add]*nums[next(add)] >0:
+                tmp = add
+                add = next(add)
+                nums[tmp] = 0
+
+        return False
+```
+
