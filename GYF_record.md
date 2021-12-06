@@ -1,3 +1,5 @@
+
+
 # 15
 
 三数之和
@@ -822,5 +824,83 @@ class Solution:
                 nums[tmp] = 0
 
         return False
+```
+
+# [剑指 Offer II 008. 和大于等于 target 的最短子数组](https://leetcode-cn.com/problems/2VG8Kg/)
+
+
+
+> 给定一个含有 n 个正整数的数组和一个正整数 target 。
+>
+> 找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
+>
+>  
+>
+> 示例 1：
+>
+> 输入：target = 7, nums = [2,3,1,2,4,3]
+> 输出：2
+> 解释：子数组 [4,3] 是该条件下的长度最小的子数组。
+
+
+
+自己的思路：使用滑动窗口，判断当前窗口的和的大小，如果大于目标值之后，判断窗口左端右划是否满足条件，记录满足条件的最小窗口
+
+```python
+#官方题解代码
+class Solution:
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        n = len(nums)
+        ans = n + 1
+        start, end = 0, 0
+        total = 0
+        while end < n:
+            total += nums[end]
+            while total >= s:
+                ans = min(ans, end - start + 1)
+                total -= nums[start]
+                start += 1
+            end += 1
+        
+        return 0 if ans == n + 1 else ans
+
+```
+
+
+
+```python
+#自己的代码
+class Solution:
+      
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        def sum(i,j,nums):
+            num = 0
+            while i<=j:
+                num = num+nums[i]
+                i = i+1
+            return num  
+        i = 0
+        j = 0
+        minn = len(nums)
+        while j<=len(nums)-1:
+            num = 0
+            
+            num = sum(i,j,nums)
+            if num>=target and i<=j:
+                
+                while num>=target and i<=j:
+                    i = i+1
+                    num = sum(i,j,nums)
+                i = i-1
+                minx = j -i+1
+                if minx<minn:
+                    minn = minx        
+            j = j+1
+        if minn==len(nums) and sum(0,len(nums)-1,nums)<target:
+            return 0
+        return minn
 ```
 
