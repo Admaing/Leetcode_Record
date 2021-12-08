@@ -904,3 +904,69 @@ class Solution:
         return minn
 ```
 
+
+
+# [剑指 Offer II 009. 乘积小于 K 的子数组](https://leetcode-cn.com/problems/ZVAVXX/)
+
+>给定一个正整数数组 nums和整数 k ，请找出该数组内乘积小于 k 的连续的子数组的个数。
+>
+> 
+>
+>示例 1:
+>
+>输入: nums = [10,5,2,6], k = 100
+>输出: 8
+>解释: 8 个乘积小于 100 的子数组分别为: [10], [5], [2], [6], [10,5], [5,2], [2,6], [5,2,6]。
+>需要注意的是 [10,5,2] 并不是乘积小于100的子数组。
+
+# 总结滑动窗口模板
+
+python
+
+```python
+def findSubArray(nums):
+    n = len(nums)
+    left,right = 0,0
+    sums = 0
+    res = N+1 #长度，根据条件更改，若是最短则设置N+1，否则设置为0
+    while right<N:
+        sums += nums[right]
+        while {符合题意的一个条件}:
+            res = min或者max (res, right-left+1)#根据最大或者最小更改
+            sums -= nums[left]
+            left+=1
+        right+=1
+        
+    return res # 返回长度
+```
+
+
+
+# [7. 整数反转](https://leetcode-cn.com/problems/reverse-integer/)
+
+> 
+
+python
+
+```python
+class Solution {
+    public int reverse(int x) {
+        int res = 0;
+        int last = 0;
+        while(x!=0) {
+            //每次取末尾数字
+            int tmp = x%10;
+            last = res;
+            res = res*10 + tmp;
+            //判断整数溢出
+            if(last != res/10)
+            {
+                return 0;
+            }
+            x /= 10;
+        }
+        return res;
+    }
+}	
+```
+
