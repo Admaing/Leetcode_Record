@@ -276,7 +276,27 @@ Go代码
 python代码
 
 ```python
-class Solution:    def deleteDuplicates(self, head: ListNode) -> ListNode:        # 存在第一个节点为重复的情况，因此这里需要建立一个虚节点作为链表的头节点        # 特判        if head == None:            return None                dump = ListNode(0,head)        cur = dump        while cur.next!=None and cur.next.next!=None:            if cur.next.val == cur.next.next.val:                x = cur.next.val                剔除所有值相同的节点，由于有一个虚节点，虚节点指向的是重复的第一个节点                while cur.next!=None and cur.next.val==x:                    cur.next = cur.next.next            else:                cur = cur.next        return dump.next              
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        # 存在第一个节点为重复的情况，因此这里需要建立一个虚节点作为链表的头节点
+        # 特判
+        if head == None:
+            return None
+        
+        dump = ListNode(0,head)
+        cur = dump
+
+        while cur.next!=None and cur.next.next!=None:
+            if cur.next.val == cur.next.next.val:
+                x = cur.next.val
+                剔除所有值相同的节点，由于有一个虚节点，虚节点指向的是重复的第一个节点
+                while cur.next!=None and cur.next.val==x:
+                    cur.next = cur.next.next
+            else:
+                cur = cur.next
+
+        return dump.next
+              
 ```
 
 
@@ -286,7 +306,49 @@ class Solution:    def deleteDuplicates(self, head: ListNode) -> ListNode:      
 go代码
 
 ```go
-func deleteDuplicates(head *ListNode) *ListNode {  if head == nil {​      return nil​    }  dummy := &ListNode{0, head}  cur := dummy  for cur.Next != nil && cur.Next.Next != nil {​    if cur.Next.Val == cur.Next.Next.Val {​      x := cur.Next.Val​      for cur.Next != nil && cur.Next.Val == x {​        cur.Next = cur.Next.Next​      }​    } else {​      cur = cur.Next​    }  }  return dummy.Next}
+func deleteDuplicates(head *ListNode) *ListNode {
+
+  if head == nil {
+
+​      return nil
+
+​    }
+
+
+
+  dummy := &ListNode{0, head}
+
+
+
+  cur := dummy
+
+  for cur.Next != nil && cur.Next.Next != nil {
+
+​    if cur.Next.Val == cur.Next.Next.Val {
+
+​      x := cur.Next.Val
+
+​      for cur.Next != nil && cur.Next.Val == x {
+
+​        cur.Next = cur.Next.Next
+
+​      }
+
+​    } else {
+
+​      cur = cur.Next
+
+​    }
+
+  }
+
+
+
+  return dummy.Next
+
+
+
+}
 ```
 
 # 142.环形链表 二
@@ -320,7 +382,23 @@ func deleteDuplicates(head *ListNode) *ListNode {  if head == nil {​      retu
 > go代码
 
 ```go
-// map初始化为空时要加大括号func detectCycle(head *ListNode) *ListNode {    a := map[*ListNode]int{}	// 创建哈希表    for head!=nil{        //当不在哈希表时返回false        if _,ok := a[head]; ok{            return head        }        //将元素存入哈希表        a[head] = 1        head = head.Next    }    return nil}
+
+// map初始化为空时要加大括号
+func detectCycle(head *ListNode) *ListNode {
+    a := map[*ListNode]int{}
+	// 创建哈希表
+    for head!=nil{
+        //当不在哈希表时返回false
+        if _,ok := a[head]; ok{
+            return head
+        }
+        //将元素存入哈希表
+        a[head] = 1
+        head = head.Next
+    }
+    return nil
+}
+
 ```
 
 
@@ -330,7 +408,16 @@ func deleteDuplicates(head *ListNode) *ListNode {  if head == nil {​      retu
 > python代码
 
 ```python
-class Solution:    def detectCycle(self, head: ListNode) -> ListNode:        hash_map = {}        while head:            if head in hash_map:                return head                        hash_map[head] = 1            head = head.next        return None
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+        hash_map = {}
+        while head:
+            if head in hash_map:
+                return head
+            
+            hash_map[head] = 1
+            head = head.next
+        return None
 ```
 
 
@@ -372,7 +459,39 @@ class Solution:    def detectCycle(self, head: ListNode) -> ListNode:        has
 > go
 
 ```go
-/** * Definition for singly-linked list. * type ListNode struct { *     Val int *     Next *ListNode * } */func reorderList(head *ListNode)  {    // 特判    if head==nil{        return    }    nodes := []*ListNode{}    for node:=head;node!=nil; node=node.Next{        // 将节点放入线性表,第二个循环直接重建        nodes = append(nodes,node)    }    i,j:=0,len(nodes)-1    for i<j{        nodes[i].Next = nodes[j]        i++        if i==j{            break        }        nodes[j].Next = nodes[i]        j--    }    // 将最后一个节点指向nil    nodes[i].Next = nil    }
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reorderList(head *ListNode)  {
+
+    // 特判
+    if head==nil{
+        return
+    }
+    nodes := []*ListNode{}
+
+    for node:=head;node!=nil; node=node.Next{
+        // 将节点放入线性表,第二个循环直接重建
+        nodes = append(nodes,node)
+    }
+    i,j:=0,len(nodes)-1
+    for i<j{
+        nodes[i].Next = nodes[j]
+        i++
+
+        if i==j{
+            break
+        }
+        nodes[j].Next = nodes[i]
+        j--
+    }
+    // 将最后一个节点指向nil
+    nodes[i].Next = nil    
+}
 ```
 
 ## 2 两数之和
@@ -386,7 +505,9 @@ class Solution:    def detectCycle(self, head: ListNode) -> ListNode:        has
 >![img](https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2021/01/02/addtwonumber1.jpg)
 >
 >```
->输入：l1 = [2,4,3], l2 = [5,6,4]输出：[7,0,8]解释：342 + 465 = 807.
+>输入：l1 = [2,4,3], l2 = [5,6,4]
+>输出：[7,0,8]
+>解释：342 + 465 = 807.
 >```
 
 
@@ -400,7 +521,35 @@ class Solution:    def detectCycle(self, head: ListNode) -> ListNode:        has
 CV官方题解
 
 ```go
-func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {    var tail *ListNode    carry := 0    for l1 != nil || l2 != nil {        n1, n2 := 0, 0        if l1 != nil {            n1 = l1.Val            l1 = l1.Next        }        if l2 != nil {            n2 = l2.Val            l2 = l2.Next        }        sum := n1 + n2 + carry        sum, carry = sum%10, sum/10        if head == nil {            head = &ListNode{Val: sum}            tail = head        } else {            tail.Next = &ListNode{Val: sum}            tail = tail.Next        }    }    if carry > 0 {        tail.Next = &ListNode{Val: carry}    }    return}
+
+func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {
+    var tail *ListNode
+    carry := 0
+    for l1 != nil || l2 != nil {
+        n1, n2 := 0, 0
+        if l1 != nil {
+            n1 = l1.Val
+            l1 = l1.Next
+        }
+        if l2 != nil {
+            n2 = l2.Val
+            l2 = l2.Next
+        }
+        sum := n1 + n2 + carry
+        sum, carry = sum%10, sum/10
+        if head == nil {
+            head = &ListNode{Val: sum}
+            tail = head
+        } else {
+            tail.Next = &ListNode{Val: sum}
+            tail = tail.Next
+        }
+    }
+    if carry > 0 {
+        tail.Next = &ListNode{Val: carry}
+    }
+    return
+}
 ```
 
 # 周赛 5938 [找出数组排序后的目标下标](https://leetcode-cn.com/problems/find-target-indices-after-sorting-array/)
@@ -430,7 +579,7 @@ func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {    var tail *ListNode   
 >
 > 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
 >
-> 
+>  
 >
 > 示例 1：
 >
@@ -453,13 +602,22 @@ func addTwoNumbers(l1, l2 *ListNode) (head *ListNode) {    var tail *ListNode   
 > **示例 1：**
 >
 > ```
-> 输入: s = "leetcode"输出: false 
+> 输入: s = "leetcode"
+> 输出: false 
 > ```
 
 方法一：哈希
 
 ```python
-class Solution:    def isUnique(self, astr: str) -> bool:        hashMap = {}        for i in astr:            if i in hashMap:                return False            hashMap[i] = 1        return True
+class Solution:
+    def isUnique(self, astr: str) -> bool:
+        hashMap = {}
+        for i in astr:
+            if i in hashMap:
+                return False
+            hashMap[i] = 1
+
+        return True
 ```
 
 
@@ -467,7 +625,18 @@ class Solution:    def isUnique(self, astr: str) -> bool:        hashMap = {}   
 方法二：暴力双循环
 
 ```python
-class Solution:    def isUnique(self, astr: str) -> bool:        for i in range(len(astr)):            for j in range(len(astr)):                if i==j:                    continue                if astr[i] == astr[j]:                    return False        return True
+class Solution:
+    def isUnique(self, astr: str) -> bool:
+        for i in range(len(astr)):
+            for j in range(len(astr)):
+                if i==j:
+                    continue
+
+                if astr[i] == astr[j]:
+                    return False
+
+
+        return True
 ```
 
 如果题目限定至小写字母，可使用位运算
@@ -484,7 +653,24 @@ class Solution:    def isUnique(self, astr: str) -> bool:        for i in range(
 哈希表，将两个字符串分别存入哈希表，然后比较两个哈希表是否相同
 
 ```python
-class Solution:    def CheckPermutation(self, s1: str, s2: str) -> bool:        # 第一思路 哈希表        hashMap = {}        for i in s1:            if i in hashMap:                hashMap[i] = hashMap[i] +1            else:                hashMap[i] = 1        hashMap2 = {}        for q in s2:            if q in hashMap2:                hashMap2[q] = hashMap2[q] +1            else:                hashMap2[q] = 1        return hashMap==hashMap2
+class Solution:
+    def CheckPermutation(self, s1: str, s2: str) -> bool:
+        # 第一思路 哈希表
+        hashMap = {}
+        for i in s1:
+            if i in hashMap:
+                hashMap[i] = hashMap[i] +1
+            else:
+                hashMap[i] = 1
+
+        hashMap2 = {}
+        for q in s2:
+            if q in hashMap2:
+                hashMap2[q] = hashMap2[q] +1
+            else:
+                hashMap2[q] = 1
+
+        return hashMap==hashMap2
 ```
 
 
@@ -518,7 +704,17 @@ class Solution:    def CheckPermutation(self, s1: str, s2: str) -> bool:        
 代码
 
 ```python
- class Solution:    def twoSum(self, numbers: List[int], target: int) -> List[int]:        i = len(numbers)-1        j = 0        while True:            if numbers[i]+numbers[j]<target:                j = j + 1            elif numbers[i]+numbers[j]>target:                i = i - 1            else:                return [j,i]
+ class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        i = len(numbers)-1
+        j = 0
+        while True:
+            if numbers[i]+numbers[j]<target:
+                j = j + 1
+            elif numbers[i]+numbers[j]>target:
+                i = i - 1
+            else:
+                return [j,i]
 ```
 
 
@@ -527,7 +723,7 @@ class Solution:    def CheckPermutation(self, s1: str, s2: str) -> bool:        
 
 > 给你一个整数数组 nums ，除某个元素仅出现 一次 外，其余每个元素都恰出现 三次 。请你找出并返回那个只出现了一次的元素。
 >
-> 
+>  
 >
 > 示例 1：
 >
@@ -543,7 +739,19 @@ class Solution:    def CheckPermutation(self, s1: str, s2: str) -> bool:        
 哈希解法
 
 ```python
-class Solution:    def singleNumber(self, nums: List[int]) -> int:        # 第一眼思路哈希        hashmap = {}        for i in nums:            if i in hashmap:                hashmap[i] = hashmap[i]+1            else:                hashmap[i] = 0        for i in nums:            if hashmap[i] == 0:                return i
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        # 第一眼思路哈希
+        hashmap = {}
+        for i in nums:
+            if i in hashmap:
+                hashmap[i] = hashmap[i]+1
+            else:
+                hashmap[i] = 0
+
+        for i in nums:
+            if hashmap[i] == 0:
+                return i
 ```
 
 
@@ -560,14 +768,14 @@ class Solution:    def singleNumber(self, nums: List[int]) -> int:        # 第�
 
 >  内容基本同三数之和
 >
->  给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a ，b ，c ，使得 a + b + c = 0 ？请找出所有和为 0 且 不重复 的三元组。
+> 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a ，b ，c ，使得 a + b + c = 0 ？请找出所有和为 0 且 不重复 的三元组。
 >
 >  
 >
->  示例 1：
+> 示例 1：
 >
->  输入：nums = [-1,0,1,2,-1,-4]
->  输出：[[-1,-1,2],[-1,0,1]]
+> 输入：nums = [-1,0,1,2,-1,-4]
+> 输出：[[-1,-1,2],[-1,0,1]]
 
 
 
@@ -576,7 +784,38 @@ class Solution:    def singleNumber(self, nums: List[int]) -> int:        # 第�
 
 
 ```python
-from typing import Listclass Solution:    def threeSum(self, nums: List[int]) -> List[List[int]]:        if len(nums) < 3:            return []        nums.sort()        res = []        for i in range(0, len(nums) - 2):            if i > 0 and nums[i] == nums[i - 1]: continue            target = -nums[i]            left, right = i + 1, len(nums) - 1            while left < right:                s = nums[left] + nums[right]                if s == target:                    res.append([nums[i], nums[left], nums[right]])                    # 去重                    while left < right:                        left = left + 1                        if nums[left - 1] != nums[left]: break                    while left < right:                        right = right - 1                        if nums[right + 1] != nums[right]: break                elif s < target:                    left = left + 1                else:                    right = right - 1        return res
+from typing import List
+
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) < 3:
+            return []
+
+        nums.sort()
+
+        res = []
+        for i in range(0, len(nums) - 2):
+            if i > 0 and nums[i] == nums[i - 1]: continue
+            target = -nums[i]
+            left, right = i + 1, len(nums) - 1
+            while left < right:
+                s = nums[left] + nums[right]
+                if s == target:
+                    res.append([nums[i], nums[left], nums[right]])
+                    # 去重
+                    while left < right:
+                        left = left + 1
+                        if nums[left - 1] != nums[left]: break
+                    while left < right:
+                        right = right - 1
+                        if nums[right + 1] != nums[right]: break
+                elif s < target:
+                    left = left + 1
+                else:
+                    right = right - 1
+        return res
+
 ```
 
 
@@ -605,7 +844,36 @@ from typing import Listclass Solution:    def threeSum(self, nums: List[int]) ->
 python 代码
 
 ```python
-class Solution:    def circularArrayLoop(self, nums: List[int]) -> bool:        n = len(nums)        # 数组长度        def next(cur):            # 返回指针下一步要到的下标的位置            return (cur+nums[cur])%n           for i,num in enumerate(nums):            if num==0:                continue             # 定义快慢指针，快指针每次走两步，起步快指针在慢指针的下一步            slow,fast = i, next(i)                        #要判断方向是否相同，因为条件是环的元素不是全正就是全负，因此应该相乘大于零            while nums[slow]*nums[next(slow)]>0 and nums[fast]*nums[next(fast)]>0:                if slow == fast:                     if slow ==next(slow):                        break                    return True                slow = next(slow)                fast = next(next(fast))            add = i            while nums[add]*nums[next(add)] >0:                tmp = add                add = next(add)                nums[tmp] = 0        return False
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+        n = len(nums)
+        # 数组长度
+        def next(cur):
+            # 返回指针下一步要到的下标的位置
+            return (cur+nums[cur])%n
+
+   
+        for i,num in enumerate(nums):
+            if num==0:
+                continue 
+            # 定义快慢指针，快指针每次走两步，起步快指针在慢指针的下一步
+            slow,fast = i, next(i)
+            
+            #要判断方向是否相同，因为条件是环的元素不是全正就是全负，因此应该相乘大于零
+            while nums[slow]*nums[next(slow)]>0 and nums[fast]*nums[next(fast)]>0:
+                if slow == fast: 
+                    if slow ==next(slow):
+                        break
+                    return True
+                slow = next(slow)
+                fast = next(next(fast))
+            add = i
+            while nums[add]*nums[next(add)] >0:
+                tmp = add
+                add = next(add)
+                nums[tmp] = 0
+
+        return False
 ```
 
 # [剑指 Offer II 008. 和大于等于 target 的最短子数组](https://leetcode-cn.com/problems/2VG8Kg/)
@@ -616,7 +884,7 @@ class Solution:    def circularArrayLoop(self, nums: List[int]) -> bool:        
 >
 > 找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
 >
-> 
+>  
 >
 > 示例 1：
 >
@@ -629,13 +897,61 @@ class Solution:    def circularArrayLoop(self, nums: List[int]) -> bool:        
 自己的思路：使用滑动窗口，判断当前窗口的和的大小，如果大于目标值之后，判断窗口左端右划是否满足条件，记录满足条件的最小窗口
 
 ```python
-#官方题解代码class Solution:    def minSubArrayLen(self, s: int, nums: List[int]) -> int:        if not nums:            return 0                n = len(nums)        ans = n + 1        start, end = 0, 0        total = 0        while end < n:            total += nums[end]            while total >= s:                ans = min(ans, end - start + 1)                total -= nums[start]                start += 1            end += 1                return 0 if ans == n + 1 else ans
+#官方题解代码
+class Solution:
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        n = len(nums)
+        ans = n + 1
+        start, end = 0, 0
+        total = 0
+        while end < n:
+            total += nums[end]
+            while total >= s:
+                ans = min(ans, end - start + 1)
+                total -= nums[start]
+                start += 1
+            end += 1
+        
+        return 0 if ans == n + 1 else ans
+
 ```
 
 
 
 ```python
-#自己的代码class Solution:          def minSubArrayLen(self, target: int, nums: List[int]) -> int:        def sum(i,j,nums):            num = 0            while i<=j:                num = num+nums[i]                i = i+1            return num          i = 0        j = 0        minn = len(nums)        while j<=len(nums)-1:            num = 0                        num = sum(i,j,nums)            if num>=target and i<=j:                                while num>=target and i<=j:                    i = i+1                    num = sum(i,j,nums)                i = i-1                minx = j -i+1                if minx<minn:                    minn = minx                    j = j+1        if minn==len(nums) and sum(0,len(nums)-1,nums)<target:            return 0        return minn
+#自己的代码
+class Solution:
+      
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        def sum(i,j,nums):
+            num = 0
+            while i<=j:
+                num = num+nums[i]
+                i = i+1
+            return num  
+        i = 0
+        j = 0
+        minn = len(nums)
+        while j<=len(nums)-1:
+            num = 0
+            
+            num = sum(i,j,nums)
+            if num>=target and i<=j:
+                
+                while num>=target and i<=j:
+                    i = i+1
+                    num = sum(i,j,nums)
+                i = i-1
+                minx = j -i+1
+                if minx<minn:
+                    minn = minx        
+            j = j+1
+        if minn==len(nums) and sum(0,len(nums)-1,nums)<target:
+            return 0
+        return minn
 ```
 
 
@@ -644,7 +960,7 @@ class Solution:    def circularArrayLoop(self, nums: List[int]) -> bool:        
 
 >给定一个正整数数组 nums和整数 k ，请找出该数组内乘积小于 k 的连续的子数组的个数。
 >
->
+> 
 >
 >示例 1:
 >
@@ -658,7 +974,20 @@ class Solution:    def circularArrayLoop(self, nums: List[int]) -> bool:        
 python
 
 ```python
-def findSubArray(nums):    n = len(nums)    left,right = 0,0    sums = 0    res = N+1 #长度，根据条件更改，若是最短则设置N+1，否则设置为0    while right<N:        sums += nums[right]        while {符合题意的一个条件}:            res = min或者max (res, right-left+1)#根据最大或者最小更改            sums -= nums[left]            left+=1        right+=1            return res # 返回长度
+def findSubArray(nums):
+    n = len(nums)
+    left,right = 0,0
+    sums = 0
+    res = N+1 #长度，根据条件更改，若是最短则设置N+1，否则设置为0
+    while right<N:
+        sums += nums[right]
+        while {符合题意的一个条件}:
+            res = min或者max (res, right-left+1)#根据最大或者最小更改
+            sums -= nums[left]
+            left+=1
+        right+=1
+        
+    return res # 返回长度
 ```
 
 
@@ -670,6 +999,24 @@ def findSubArray(nums):    n = len(nums)    left,right = 0,0    sums = 0    res 
 python
 
 ```python
-class Solution {    public int reverse(int x) {        int res = 0;        int last = 0;        while(x!=0) {            //每次取末尾数字            int tmp = x%10;            last = res;            res = res*10 + tmp;            //判断整数溢出            if(last != res/10)            {                return 0;            }            x /= 10;        }        return res;    }}	
+class Solution {
+    public int reverse(int x) {
+        int res = 0;
+        int last = 0;
+        while(x!=0) {
+            //每次取末尾数字
+            int tmp = x%10;
+            last = res;
+            res = res*10 + tmp;
+            //判断整数溢出
+            if(last != res/10)
+            {
+                return 0;
+            }
+            x /= 10;
+        }
+        return res;
+    }
+}	
 ```
 
