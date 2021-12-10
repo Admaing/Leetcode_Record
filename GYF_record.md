@@ -1020,3 +1020,35 @@ class Solution {
 }	
 ```
 
+
+# [剑指 Offer II 033. 变位词组](https://leetcode-cn.com/problems/sfvd7V/)
+
+> 给定一个字符串数组 strs ，将 变位词 组合在一起。 可以按任意顺序返回结果列表。
+>
+> 注意：若两个字符串中每个字符出现的次数都相同，则称它们互为变位词。
+>
+>  
+>
+> 示例 1:
+>
+> 输入: strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+> 输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+哈希表
+
+```python
+class Solution:
+    def groupAnagrams(self, strs):
+        ret = []
+        d = {}
+        for i in strs:
+            sort_i = ''.join(sorted(i))
+            if sort_i in d:
+                ret[d[sort_i]].append(i)
+            else:
+                d[sort_i] = len(ret)
+                ret.append([i])
+        return ret
+
+```
+
