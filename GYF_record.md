@@ -1135,3 +1135,38 @@ class Solution:
 ```
 
 
+# [剑指 Offer II 011. 0 和 1 个数相同的子数组](https://leetcode-cn.com/problems/A1NYOS/)
+
+> 给定一个二进制数组 nums , 找到含有相同数量的 0 和 1 的最长连续子数组，并返回该子数组的长度。
+>
+> 
+>
+> 示例 1:
+>
+> 输入: nums = [0,1]
+> 输出: 2
+> 说明: [0, 1] 是具有相同数量 0 和 1 的最长连续子数组。
+
+ 
+
+思路：因为问中只存在0和1，故可将问题转换为0为-1的情况，故本题可使用滑动窗口或者前缀和
+
+前缀和
+
+```python
+class Solution(object):
+    def findMaxLength(self, nums):
+        hash_dict = {0: -1}
+        res = temp = 0
+        for index, num in enumerate(nums):
+            temp += 1 if num == 1 else -1
+            if temp in hash_dict:
+                res = max(res, index - hash_dict[temp])
+                
+            else:
+                hash_dict[temp] = index
+        return res
+```
+
+
+
