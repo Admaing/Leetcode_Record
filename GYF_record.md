@@ -1169,4 +1169,57 @@ class Solution(object):
 ```
 
 
+# [剑指 Offer II 014. 字符串中的变位词](https://leetcode-cn.com/problems/MPnaiL/)
+
+>给定两个字符串 s1 和 s2，写一个函数来判断 s2 是否包含 s1 的某个变位词。
+>
+>换句话说，第一个字符串的排列之一是第二个字符串的 子串 。
+>
+> 
+>
+>示例 1：
+>
+>输入: s1 = "ab" s2 = "eidbaooo"
+>输出: True
+>解释: s2 包含 s1 的排列之一 ("ba").
+
+
+
+滑动窗口的字符串使用，
+
+遇到统计字符串个数的问题，可将字符串的数目转换为数组中的数量，
+
+```python
+ for i in range(lg):
+            #将两个字符串转换为数组中的统计个数
+            arr1[ord(s1[i])-ord('a')] +=1
+            arr2[ord(s2[i])-ord('a')] +=1
+```
+
+
+
+
+
+```python
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        arr1, arr2,lg = [0]*26, [0]*26, len(s1)
+        if lg > len(s2):
+            return  False
+        
+        for i in range(lg):
+            # 将两个字符串转换为数组中的统计个数
+            arr1[ord(s1[i])-ord('a')] +=1
+            arr2[ord(s2[i])-ord('a')] +=1
+
+        for j in range(lg, len(s2)):
+            if arr1 == arr2:
+                return True
+
+            arr2[ord(s2[j-lg])-ord('a')] -=1
+            arr2[ord(s2[j])-ord('a')] +=1
+        return arr1 == arr2
+```
+
+
 
