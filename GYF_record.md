@@ -1222,4 +1222,79 @@ class Solution:
 ```
 
 
+# [剑指 Offer II 018. 有效的回文](https://leetcode-cn.com/problems/XltzEq/)
+
+>
+>
+>给定一个字符串 s ，验证 s 是否是 回文串 ，只考虑字母和数字字符，可以忽略字母的大小写。
+>
+>本题中，将空字符串定义为有效的 回文串 。
+>
+> 
+>
+>示例 1:
+>
+>输入: s = "A man, a plan, a canal: Panama"
+>输出: true
+>解释："amanaplanacanalpanama" 是回文串
+
+
+
+解法一：使用暴力直接反转字符串
+
+解法二：双指针向中间收缩，若两边字符串不相等则直接返回Null、
+
+```python
+class Solution:
+    def isPalindrome(self, s):
+        left, right, flag = 0, len(s) - 1, False
+        while left<=right:
+            # 是否是数字
+            if not s[left].isalnum():
+                left+=1
+            else:
+                if s[left].lower() != s[right].lower():
+                    return False
+                left +=1
+                 right -= 1
+        
+            if not s[right].isalnum and right>left:
+                right-=1
+            else:
+                if s[left].lower() != s[right].lower():
+                    return False
+                left +=1
+                right -= 1
+
+
+        return True   
+    
+```
+
+
+
+
+
+```python
+class Solution:
+    def isPalindrome(self, s):
+        left, flag = 0, False
+        strs = ""
+        for i in s:
+            if i.isalnum():
+                strs += i.lower()
+        right = len(strs)-1
+        while left<=right:
+
+            if strs[left].lower() != strs[right].lower():
+                return False
+            left +=1
+            right -= 1
+
+
+
+        return True   
+```
+
+
 
