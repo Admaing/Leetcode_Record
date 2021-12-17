@@ -1297,4 +1297,37 @@ class Solution:
 ```
 
 
+# [剑指 Offer II 019. 最多删除一个字符得到回文](https://leetcode-cn.com/problems/RQku0D/)
+
+> 给定一个非空字符串 `s`，请判断如果 **最多** 从字符串中删除一个字符能否得到一个回文字符串。
+>
+>  
+>
+> **示例 1:**
+>
+> ```
+> 输入: s = "aba"
+> 输出: true
+> ```
+
+双指针，若遇到不相等的只要左+1或者you+1。满足条件即可
+
+```python
+class Solution:
+    def validPalindrome(self, s):
+        def check(l, r):
+            while l <= r:
+                if s[l] != s[r]:
+                    break
+                l += 1
+                r -= 1
+            return l, r
+
+        mid = len(s) // 2
+        left, right = check(0, len(s) - 1)
+        if left > mid:
+            return True
+        return check(left + 1, right)[0] > mid or check(left, right - 1)[0] == mid
+```
+
 
