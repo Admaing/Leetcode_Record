@@ -1331,3 +1331,47 @@ class Solution:
 ```
 
 
+
+# [剑指 Offer II 021. 删除链表的倒数第 n 个结点](https://leetcode-cn.com/problems/SLwz0R/)
+
+
+
+> 难度中等14收藏分享切换为英文接收动态反馈
+>
+> 给定一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
+
+> ```
+> 输入：head = [1,2,3,4,5], n = 2
+> 输出：[1,2,3,5]
+> ```
+
+
+
+思路：双指针，倒数第n个节点可以转换为，让右指针先走n个节点，此时左指针距离右指针n个节点，当右指针到达尽头，此时左指针为倒数第n个节点，删除即可。
+
+
+
+```python
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        #让右指针先走n步，然后移动左指针
+        left=right=head
+        count = 0
+
+        while count<n:
+            right = right.next
+            count+=1
+
+        if not right:
+            return head.next
+
+        while right.next:
+            left = left.next
+            right = right.next
+        
+        left.next = left.next.next
+
+        return head
+```
+
+
