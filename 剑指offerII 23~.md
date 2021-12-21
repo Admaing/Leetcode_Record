@@ -28,3 +28,42 @@ class Solution:
 
 ```
 
+
+# [剑指 Offer II 024. 反转链表](https://leetcode-cn.com/problems/UHnkqh/)
+
+>  给定单链表的头节点 `head` ，请反转链表，并返回反转后的链表的头节点。
+>
+>  
+>
+> ```
+> 输入：head = [1,2,3,4,5]
+> 输出：[5,4,3,2,1]
+> ```
+>
+> 
+
+
+
+
+
+两种思路：一种递归
+
+一直遍历，寻找下一个节点，并将下一个节点的next指针指向前一个pre节点
+
+python代码
+
+```python
+class Solution(object):
+    def reverseList(self, head):
+        pre,cur = None,head
+        while cur:
+            tmp = cur.next
+            cur.next = pre
+
+            pre, cur =  cur,tmp
+        return pre
+            
+```
+
+
+
