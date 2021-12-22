@@ -66,4 +66,55 @@ class Solution(object):
 ```
 
 
+# [剑指 Offer II 025. 链表中的两数相加](https://leetcode-cn.com/problems/lMSNwu/)
+
+> 给定两个 非空链表 l1和 l2 来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。
+>
+> 可以假设除了数字 0 之外，这两个数字都不会以零开头。
+>
+> ```
+> 输入：l1 = [7,2,4,3], l2 = [5,6,4]
+> 输出：[7,8,0,7]
+> ```
+
+思路：将两个链表反转，然后按位想加，遇到进位则将值保存到下一个节点
+
+```python
+#         self.next = next
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        def reverseList(head):
+            pre, cur = None, head
+            while cur:
+                tmp = cur.next
+                cur.next = pre
+                pre, cur = cur, tmp
+            return pre
+        rev_l1 = reverseList(l1)
+        rev_l2 = reverseList(l2)
+        count = 0
+        ret = ListNode()
+        tmp = ret
+        
+        while rev_l1 or rev_l2 or count:
+            num = 0
+            if rev_l1:
+                num = num+rev_l1.val
+                rev_l1 = rev_l1.next
+
+            if rev_l2:
+                num = num+rev_l2.val
+                rev_l2 = rev_l2.next
+            
+            count,num = divmod(count+num,10)
+            tmp.next = ListNode(num)
+            tmp = tmp.next
+        return reverseList(ret.next)
+```
+
 
