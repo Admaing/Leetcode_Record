@@ -118,3 +118,64 @@ class Solution(object):
 ```
 
 
+# [剑指 Offer II 026. 重排链表](https://leetcode-cn.com/problems/LGjMqU/)
+
+> 给定一个单链表 L 的头节点 head ，单链表 L 表示为：
+>
+>  L0 → L1 → … → Ln-1 → Ln 
+> 请将其重新排列后变为：
+>
+> L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+>
+> 不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+>
+> ```
+> 输入: head = [1,2,3,4]
+> 输出: [1,4,2,3]
+> ```
+
+
+
+思路：反转链表+快慢指针指针
+
+首先设置快曼指针，慢指针走一步，快指针走两步
+
+当快指针走到尽头时，慢指针走到中间，
+
+将链表分开，反转后面一部分的链表，再将两表合并，即可完成重排
+
+
+
+
+
+```python
+class Solution:
+    def reverseList(self, head):
+        pre, cur = None, head
+        while cur:
+            tmp = cur.next
+            cur.next = pre
+            pre, cur = cur, tmp
+        return pre
+
+    def reorderList(self, head: ListNode) -> None:
+        pre = ListNode()
+        pre.next = head
+        slow = fast = pre
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        half = slow.next
+        slow.next = None
+        rev_half = self.reverseList(half)
+        cur = pre.next
+        while slow and rev_half:
+            tmp = cur.next
+            cur.next = rev_half
+            cur = cur.next
+            rev_half = rev_half.next
+            cur.next = tmp
+            cur = cur.next
+
+```
+
