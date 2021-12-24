@@ -179,3 +179,32 @@ class Solution:
 
 ```
 
+# [剑指 Offer II 027. 回文链表](https://leetcode-cn.com/problems/aMhZSa/)
+
+> 给定一个链表的 **头节点** `head` **，**请判断其是否为回文链表。
+>
+> 如果一个链表是回文，那么链表节点序列从前往后看和从后往前看是相同的。
+>
+>  
+>
+> ```
+> 输入: head = [1,2,3,3,2,1]
+> 输出: true
+> ```
+
+思路：使用栈数据结构将
+
+```python
+
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        vals = []
+        current_node = head
+        while current_node is not None:
+            vals.append(current_node.val)
+            current_node = current_node.next
+        return vals == vals[::-1]
+
+```
+
+
