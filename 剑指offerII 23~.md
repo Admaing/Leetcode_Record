@@ -255,6 +255,46 @@ class Solution:
         
 ```
 
+# 272周赛
+
+## [5963. 反转两次的数字](https://leetcode-cn.com/problems/a-number-after-a-double-reversal/)
+
+```python
+class Solution(object):
+    def isSameAfterReversals(self, num):
+        """
+        :type num: int
+        :rtype: bool
+        """
+        if num==0:
+            return True
+        num1 = str(num)
+        num1 = list(num1[::-1])
+        while num1[0]=='0':
+            num1.pop(0)
+            
+        num2 = ""
+        for i in num1[::-1]:
+            num2 = num2 + i
+            
+        num2 = int(num2)
+        return num2==num
+```
+
+## [5965. 相同元素的间隔之和](https://leetcode-cn.com/problems/intervals-between-identical-elements/)
+
+```python
+class Solution:
+    def getDistances(self, arr: List[int]) -> List[int]:
+        d, res = defaultdict(list), [0] * len(arr)
+        for i, x in enumerate(arr): d[x].append(i)
+        for x in d:
+            pi, n, c = 0, len(d[x]), sum(d[x])
+            for i, pn in enumerate(d[x]): res[(pi := pn)] = (c := c - (n - 2 * i) * (pn - pi))
+        return res
+
+```
+
 
 
 
