@@ -296,6 +296,79 @@ class Solution:
 ```
 
 
+# [剑指 Offer II 028. 展平多级双向链表](https://leetcode-cn.com/problems/Qv1Da2/)
+
+## DFS模板
+
+```python
+# python DFS模板  递归版本
+visited = set()
+def dfs(node, visited):
+    if node in visited:
+        return 
+   	visited.add(node)
+    
+    for next_node in node.children():
+        if not next_node in visited:
+            dfs(next_node, visited)
+```
+
+> 多级双向链表中，除了指向下一个节点和前一个节点指针之外，它还有一个子链表指针，可能指向单独的双向链表。这些子列表也可能会有一个或多个自己的子项，依此类推，生成多级数据结构，如下面的示例所示。
+>
+> 给定位于列表第一级的头节点，请扁平化列表，即将这样的多级双向链表展平成普通的双向链表，使所有结点出现在单级双链表中。
+>
+>  输入：head = [1,2,null,3]
+> 输出：[1,3,2]
+> 解释：
+>
+> 输入的多级列表如下图所示：
+>
+>   1---2---NULL
+>   |
+>   3---NULL
+
+DFS 每日一抄
+
+```python
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
+"""
+
+class Solution(object):
+    def flatten(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        if head == None:
+            return head
+
+        dummy = Node(-1, Node,Node,Node)
+        
+        def dfs(pre,cur):
+            if cur == None:
+                return pre
+            
+            pre.next = cur
+            cur.prev = pre
+
+            nxt_head = cur.next
+
+            tail = dfs(cur,cur.child)
+            cur.child = None
+
+            return dfs(tail, nxt_head)
+
+        dfs(dummy,head)
+        dummy.next.prev = None
+        return dummy.next
+```
 
 
 
