@@ -373,3 +373,43 @@ class Solution(object):
 
 
 
+# [剑指 Offer II 035. 最小时间差](https://leetcode-cn.com/problems/569nqc/)
+
+> 给定一个 24 小时制（小时:分钟 "HH:MM"）的时间列表，找出列表中任意两个时间的最小时间差并以分钟数表示。
+>
+>  
+>
+> 示例 1：
+>
+> 输入：timePoints = ["23:59","00:00"]
+> 输出：1
+
+
+
+思路：所有时间为24*60，若列表长度超过这个值，则存在重复的时间，直接返回零，若不存在重复的时间，将分钟转换成为时间，a *24 + b  然后进行排序，最后将第一个点+24 * 60 放到列表末尾，
+
+然后遍历寻找最大和最小的两个值进行相减，所得为结果
+
+```python
+class Solution(object):
+    def findMinDifference(self, timePoints):
+        """
+        :type timePoints: List[str]
+        :rtype: int
+        """
+        hash_map = {}
+        for i in timePoints:
+            if i in hash_map:
+                return 0
+            else:
+                hash_map[i] = 1
+
+        minutes = sorted(int(t[:2])*60 + int(t[3:]) for t in timePoints)
+        minutes.append(minutes[0] + 24*60)
+        res = minutes[-1]
+
+        for i in range(1,len(minutes)):
+            res = min(res,minutes[i]-minutes[i-1])
+        return res
+```
+
