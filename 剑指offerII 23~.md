@@ -412,4 +412,45 @@ class Solution(object):
             res = min(res,minutes[i]-minutes[i-1])
         return res
 ```
+# [剑指 Offer II 032. 有效的变位词](https://leetcode-cn.com/problems/dKk3P7/)
+
+> 给定两个字符串 s 和 t ，编写一个函数来判断它们是不是一组变位词（字母异位词）。
+>
+> 注意：若 s 和 t 中每个字符出现的次数都相同且字符顺序不完全相同，则称 s 和 t 互为变位词（字母异位词）。
+>
+>  
+>
+> 示例 1:
+>
+> 输入: s = "anagram", t = "nagaram"
+> 输出: true
+
+
+
+思路：将两个字符串存入哈希表，返回两个哈希表比较的结果
+
+简单题我重拳出击 😁
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        hash_map = {}
+        hash_map1 = {}
+        if t==s:
+            return False
+
+        for i in s:
+            if i in hash_map:
+                hash_map[i]+=1
+            else:
+                hash_map[i] = 0
+
+        for i in t:
+            if i in hash_map1:
+                hash_map1[i]+=1
+            else:
+                hash_map1[i] = 0
+
+        return hash_map1==hash_map
+```
 
