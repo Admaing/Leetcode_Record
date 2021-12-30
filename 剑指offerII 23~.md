@@ -454,3 +454,107 @@ class Solution:
         return hash_map1==hash_map
 ```
 
+# [剑指 Offer II 039. 直方图最大矩形面积](https://leetcode-cn.com/problems/0ynMMM/)
+
+> 给定非负整数数组 heights ，数组中的数字用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+>
+> 求在该柱状图中，能够勾勒出来的矩形的最大面积。
+>
+> **示例 1:**
+>
+> ![img](12.20.assets/histogram.jpg)
+>
+> ```
+> 输入：heights = [2,1,5,6,2,3]
+> 输出：10
+> 解释：最大的矩形为图中红色区域，面积为 10
+> ```
+
+
+
+暴力
+
+```python
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        a = []
+        m_h = 0
+        for i in heights:
+            a.append(i)
+            q = a[::-1]
+            for j,w in enumerate(q):
+                m_q = min(q[:j+1])
+                print(j)
+
+                if m_q*(j+1) > m_h:
+                    m_h = m_q*(j+1)
+
+
+        return m_h
+```
+
+
+
+超时
+
+
+
+
+
+```python
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        a = [-1]
+        m_h = 0
+        for i in heights:
+            if i > a[-1]:
+            	a.append(i)
+            else:
+            	q = a[::-1]
+            for j,w in enumerate(q):
+                m_q = min(q[:j+1])
+
+                if m_q*(j+1) > m_h:
+                    m_h = m_q*(j+1)
+
+
+        return m_h
+```
+
+
+
+
+
+```python
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+
+        left_less = [-1 for _ in range(n)]
+        stk = []
+        for i in range(n):
+            x = heights[i]
+            while stk and heights[stk[-1]] >= x:
+                stk.pop()
+            if stk:
+                left_less[i] = stk[-1]
+            stk.append(i)
+
+        right_less = [n for _ in range(n)]
+        stk = []
+        for i in range(n - 1, -1, -1):
+            x = heights[i]
+            while stk and heights[stk[-1]] >= x:
+                stk.pop()
+            if stk:
+                right_less[i] = stk[-1]
+            stk.append(i)
+        
+        res = 0
+        for i, h in enumerate(heights):
+            cur = (right_less[i] - left_less[i] - 1) * h
+            res = max(res, cur)
+        return res
+
+```
+
