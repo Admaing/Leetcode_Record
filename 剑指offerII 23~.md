@@ -771,4 +771,38 @@ func searchInsert(nums []int, target int) int {
 
 
 ```
+# [剑指 Offer II 061. 和最小的 k 个数对](https://leetcode-cn.com/problems/qn8gGX/)
+
+> 给定两个以升序排列的整数数组 nums1 和 nums2 , 以及一个整数 k 。
+
+> 定义一对值 (u,v)，其中第一个元素来自 nums1，第二个元素来自 nums2 。
+
+> 请找到和最小的 k 个数对 (u1,v1),  (u2,v2)  ...  (uk,vk) 。
+
+输入: nums1 = [1,7,11], nums2 = [2,4,6], k = 3
+输出: [1,2],[1,4],[1,6]
+解释: 返回序列中的前 3 对数：
+    [1,2],[1,4],[1,6],[7,2],[7,4],[11,2],[7,6],[11,4],[11,6]
+
+```python
+class Solution:
+    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        lst = []
+        res = []
+        for i in nums1:
+            for j in nums2:
+                lst.append((i,j,i+j))
+        
+        #构建出对值数组
+        lst = sorted(lst,key = lambda x:x[2])
+        if len(lst)<k:
+            for i in range(len(lst)):
+                res.append(list(lst[i])[0:2])
+        else:
+            for i in range(k):
+                res.append(list(lst[i])[0:2])
+        return res
+
+```
+
 
