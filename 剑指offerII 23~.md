@@ -842,4 +842,41 @@ class Solution(object):
             return root
 
         return self.searchBST(root.left if val < root.val else root.right, val)
-        
+       
+       
+       # [剑指 Offer II 068. 查找插入位置](https://leetcode-cn.com/problems/N6YdxV/)
+
+给定一个排序的整数数组 nums 和一个整数目标值 target ，请在数组中找到 target ，并返回其下标。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+
+请必须使用时间复杂度为 O(log n) 的算法。
+
+ 
+
+示例 1:
+
+输入: nums = [1,3,5,6], target = 5
+输出: 2
+
+> 二分
+
+```python
+# python3
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left,right = 0,len(nums)-1
+
+        while left<=right:
+            mid = (left+right)//2
+            if nums[mid]==target:
+                return mid
+            elif nums[mid]<target:
+                left=mid+1
+            else:
+                right=mid-1
+
+        return left
+```
+
+
+       
+       
