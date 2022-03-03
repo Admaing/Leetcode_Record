@@ -1006,4 +1006,31 @@ class Solution:
 ```
 
        
-       
+       public class Offer076 {
+    public int findKthLargest(int[] nums, int k) {
+        // PriorityQueue，优先队列的底层使用了堆原理，可以直接当做堆使用，默认为小根堆
+        // PriorityQueue的保存方法是用数组进行保存的，
+        // 在已知堆大小的时候为其赋值初始化容量可以减少扩容时的消耗
+        PriorityQueue<Integer> heap = new PriorityQueue<>(k);
+        // 先将 k 个元素放入堆中
+        // 题目保证了 k <= nums.length，如果没有，不可以直接遍历，容易造成越界
+        // 可以使用 for(int i = 0,end = Math.min(k, nums.length); i < end; i++) 的方式避免越界
+        for (int i = 0; i < k; i++) {
+            heap.add(nums[i]);
+        }
+        // 题目中保证了 k >= 1，也就是说堆一定不为空，如果没有，
+        // 在进行heap.peek()，heap.poll()操作前，都必须要进行heap.isEmpty()的判断才可以
+        for (int i = k, length = nums.length; i < length; i++) {
+            if (heap.peek() < nums[i]) {
+                heap.poll();
+                heap.add(nums[i]);
+            }
+        }
+        return heap.poll();
+    }
+}
+
+作者：huaLuoYueQue
+链接：https://leetcode-cn.com/problems/xx4gT2/solution/hua-luo-yue-que-dui-pai-xu-he-kuai-su-pa-cobw/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
