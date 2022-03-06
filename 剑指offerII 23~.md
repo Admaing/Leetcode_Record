@@ -1045,3 +1045,50 @@ func maxSubArray(nums []int) int {
     return max
 }
 
+# [剑指 Offer II 077. 链表排序](https://leetcode-cn.com/problems/7WHec2/)
+
+给定链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
+
+ 
+
+示例 1：
+
+
+
+输入：head = [4,2,1,3]
+输出：[1,2,3,4]
+
+把链表的结点存放list
+
+排序后重新建表
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        if not head:
+            return None
+        phead = head
+        alist = []
+
+        while phead:
+            alist.append(phead)
+            phead = phead.next
+        
+        alist.sort(key=lambda x:x.val)
+        root = alist[0]
+        root.next = None
+        cur = root
+        for i in range(1,len(alist)):
+            alist[i].next = None
+            cur.next = alist[i]
+            cur = alist[i]
+
+        return root
+```
+
+
