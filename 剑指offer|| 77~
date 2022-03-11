@@ -1,0 +1,44 @@
+# [剑指 Offer II 080. 含有 k 个元素的组合](https://leetcode-cn.com/problems/uUsW3B/)
+
+> 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+>
+>  
+>
+> 示例 1:
+>
+> 输入: n = 4, k = 2
+> 输出:
+> [
+>   [2,4],
+>   [3,4],
+>   [2,3],
+>   [1,2],
+>   [1,3],
+>   [1,4],
+> ]
+
+思路：回溯
+
+当选定1时，有剩余三个选项，当选择2时，列表长度满足要求，回溯，
+
+特别的是，要从当前遍历的下一个进行遍历
+
+
+
+```python
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        result = []
+        def backtracking(n,k,result,begin,lists):
+            if len(lists)==k:
+                result.append(lists.copy())
+                return
+            for i in range(begin,n+1):
+                lists.append(i)
+                backtracking(n,k,result,i+1,lists)
+                lists.pop()
+        backtracking(n,k,result,1,[])
+        return result
+```
+
+记得将最后一个元素pop（）出去
